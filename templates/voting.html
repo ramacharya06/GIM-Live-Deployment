@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class = "content-center min-h-screen p-6">
+    <form action="/submit_vote" method="POST" class="max-w-md mx-auto space-y-4">
+        {% csrf_token %}
+        {% for gen in gender %}
+        
+        {% if gen == "M" %}
+        <h2 class="text-2xl font-bold mb-4 text-blue-600">Master GIM</h2>
+        {% elif gen == "F" %}
+        <h2 class="text-2xl font-bold mb-4 text-pink-600">Miss GIM</h2>
+        {% endif %}
+        {% for vote in votes %}
+        {% if vote.gender == gen %}
+        <label class="flex items-start border rounded-lg p-4 cursor-pointer hover:border-blue-500">
+            <input type="radio" name="voter_{{ gen|lower }}" value="{{ vote.id }}"
+                class="mt-1 text-blue-600 focus:ring-blue-500" required>
+            <div class="ml-3">
+                <div class="font-large">{{ vote.name }}{{vote.votes}}</div>
+            </div>
+        </label>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+
+        <button type="submit" class="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+            Submit
+        </button>
+    </form>
+
+</body>
+
+</html>
