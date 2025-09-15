@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Already Voted - GIM Awards</title>
+    <link rel="stylesheet" href="{% static 'voting-styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-header">
+        <h1 class="app-title">GIM Awards 2025</h1>
+    </div>
+    
+    <div class="message-container">
+        <div class="success-icon" style="color: var(--secondary-color);">
+            <i class="fas fa-info-circle"></i>
+        </div>
+        <h1>You've Already Voted</h1>
+        <p>It seems that you've already submitted your vote. Thank you for participating in the GIM Awards!</p>
+        
+        <div class="info-notice">
+            <i class="fas fa-envelope"></i>
+            <span>Results will be announced soon.</span>
+        </div>
+        
+        <a href="/" class="back-link">Return to Home</a>
+    </div>
+
+    <style>
+        .info-notice {
+            background-color: rgba(79, 70, 229, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .info-notice i {
+            color: var(--primary-color);
+        }
+    </style>
+
+    <script>
+        // Add simple pulse animation to the info icon
+        document.addEventListener('DOMContentLoaded', function() {
+            const icon = document.querySelector('.success-icon i');
+            setInterval(() => {
+                icon.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    icon.style.transform = 'scale(1)';
+                }, 500);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

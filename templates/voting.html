@@ -6,39 +6,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voting</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>GIM Awards Voting</title>
+    <link rel="stylesheet" href="{% static 'voting-styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
-<body class = "content-center min-h-screen p-6">
-    <form action="/submit_vote" method="POST" class="max-w-md mx-auto space-y-4">
+<body>
+    <div class="app-header">
+        <h1 class="app-title">GIM Awards 2025</h1>
+        <p class="app-subtitle">Cast your vote for the most deserving candidates</p>
+    </div>
+
+    <form action="/submit_vote" method="POST" class="voting-form">
         {% csrf_token %}
-        {% for gen in gender %}
         
-        {% if gen == "M" %}
-        <h2 class="text-2xl font-bold mb-4 text-blue-600">Master GIM</h2>
-        {% elif gen == "F" %}
-        <h2 class="text-2xl font-bold mb-4 text-pink-600">Miss GIM</h2>
-        {% endif %}
-        {% for vote in votes %}
-        {% if vote.gender == gen %}
-        <label class="flex items-start border rounded-lg p-4 cursor-pointer hover:border-blue-500">
-            <input type="radio" name="voter_{{ gen|lower }}" value="{{ vote.id }}"
-                class="mt-1 text-blue-600 focus:ring-blue-500" required>
-            <div class="ml-3">
-                <div class="font-large">{{ vote.name }}{{vote.votes}}</div>
-            </div>
-        </label>
-        {% endif %}
-        {% endfor %}
+        {% for gen in gender %}
+        <div class="section">
+            {% if gen == "M" %}
+            <h2 class="gender-title male-title"><i class="fas fa-crown"></i> Mr GIM</h2>
+            {% elif gen == "F" %}
+            <h2 class="gender-title female-title"><i class="fas fa-crown"></i> Miss GIM</h2>
+            {% endif %}
+            
+            {% for vote in votes %}
+            {% if vote.gender == gen %}
+            <label class="candidate-option {% if gen == 'M' %}male-candidate{% else %}female-candidate{% endif %}">
+                <input type="radio" name="voter_{{ gen|lower }}" value="{{ vote.id }}" required>
+                <div class="candidate-info">
+                    <div class="candidate-name">{{ vote.name }}</div>
+                </div>
+            </label>
+            {% endif %}
+            {% endfor %}
+        </div>
         {% endfor %}
 
-        <button type="submit" class="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
-            Submit
+        <button type="submit" class="submit-button">
+            <i class="fas fa-vote-yea"></i> Submit Vote
         </button>
     </form>
 
+    <script>
+        // Add simple animations and interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate header on page load
+            const header = document.querySelector('.app-header');
+            header.style.opacity = 0;
+            let fadeIn = setInterval(() => {
+                if (header.style.opacity < 1) {
+                    header.style.opacity = parseFloat(header.style.opacity) + 0.1;
+                } else {
+                    clearInterval(fadeIn);
+                }
+            }, 40);
+
+            // Add click effect for candidate options
+            const options = document.querySelectorAll('.candidate-option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Add visual feedback
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateX(5px)';
+                    }, 150);
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

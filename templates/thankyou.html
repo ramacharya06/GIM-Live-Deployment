@@ -1,12 +1,75 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You</title>
+    <title>Thank You - GIM Awards</title>
+    <link rel="stylesheet" href="{% static 'voting-styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Thank You for Your Vote!</h1>
-    <p>Your vote has been successfully submitted.</p>
+    <div class="app-header">
+        <h1 class="app-title">GIM Awards 2025</h1>
+    </div>
+    
+    <div class="message-container">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h1>Thank You for Your Vote!</h1>
+        <p>Your vote has been successfully submitted and will count towards the final results.</p>
+        
+        <div class="animation-container">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+        </div>
+        
+        <a href="/" class="back-link">Return to Home</a>
+    </div>
+
+    <script>
+        // Add celebratory animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make stars twinkle
+            const stars = document.querySelectorAll('.fas.fa-star');
+            stars.forEach((star, index) => {
+                star.style.position = 'absolute';
+                star.style.fontSize = `${Math.random() * 20 + 10}px`;
+                star.style.color = 'gold';
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                
+                // Animate each star
+                setInterval(() => {
+                    star.style.opacity = Math.random() * 0.5 + 0.5;
+                    star.style.transform = `scale(${Math.random() * 0.5 + 0.8})`;
+                }, 500 + index * 300);
+            });
+            
+            // Add more celebratory stars
+            const container = document.querySelector('.animation-container');
+            for(let i = 0; i < 15; i++) {
+                const star = document.createElement('i');
+                star.classList.add('fas', 'fa-star');
+                star.style.position = 'absolute';
+                star.style.fontSize = `${Math.random() * 20 + 10}px`;
+                star.style.color = 'gold';
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.opacity = Math.random() * 0.5 + 0.5;
+                container.appendChild(star);
+                
+                // Animate each star
+                setInterval(() => {
+                    star.style.opacity = Math.random() * 0.5 + 0.5;
+                    star.style.transform = `scale(${Math.random() * 0.5 + 0.8})`;
+                }, Math.random() * 1000 + 500);
+            }
+        });
+    </script>
 </body>
 </html>
