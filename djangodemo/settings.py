@@ -18,10 +18,11 @@ env = Env(
     DEBUG=(bool, False),  # Default to False for production
     DATABASE_URL=(str, 'sqlite:///db.sqlite3'),
     ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1']),
-    SECRET_KEY=(str, ''),
+    SECRET_KEY=(str),
 )
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
